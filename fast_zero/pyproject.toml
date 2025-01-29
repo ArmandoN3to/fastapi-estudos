@@ -1,0 +1,23 @@
+[project]
+name = "fast-zero"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Armando de Oliveira Gonçalves Neto",email = "106642163+ArmandoN3to@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12.*"
+dependencies = [
+    "fastapi[standard] (>=0.115.7,<0.116.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.group.dev.dependencies]
+ruff = "^0.9.3"
+pytest = "^8.3.4"
+pytest-cov = "^6.0.0"
+

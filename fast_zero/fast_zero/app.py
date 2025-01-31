@@ -1,15 +1,13 @@
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse 
+from http import HTTPStatus
+from fast_zero.schemas import Message
 
-app= FastAPI()              #Executar terminal - fastapi dev (caminho arquivo) 
-                            #-> sobe um servidor local para executar
+app = FastAPI()
 
 
-@app.get('/')    #'/' é a raiz do site
+@app.get('/',status_code=HTTPStatus.OK,response_class=HTMLResponse)#response_model=Message
 def read_root():
-    return {'message' : 'Hello armando'}
-
-@app.get('/world')
-def read_root():
-    return {'message' : 'Hello world'}
-
-
+    return """
+    <h1>Olá Mundo!<h1>
+"""   

@@ -1,0 +1,18 @@
+[project]
+name = "sql-alchemy"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Armando de Oliveira Gonçalves Neto",email = "106642163+ArmandoN3to@users.noreply.github.com"}
+]
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "sqlalchemy (>=2.0.37,<3.0.0)",
+    "pymysql (>=1.1.1,<2.0.0)"
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"

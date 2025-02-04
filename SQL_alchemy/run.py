@@ -1,7 +1,9 @@
+from infra.repository.atores_repository import AtoresRepositoy
 from infra.repository.filmes_repository import FilmesRepositoy
-repo = FilmesRepositoy()
-data=repo.select()
-repo.insert("Algum Filme",'comedia',2010)
-repo.delete('dasda')
+repo = AtoresRepositoy()
+response=repo.select()
+# print(response)
 
-print(data)
+repo2=FilmesRepositoy()
+response2=repo2.select_drama_filmes()
+print(response2)

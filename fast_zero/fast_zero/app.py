@@ -1,6 +1,10 @@
 from fastapi import FastAPI,HTTPException
 from fastapi.responses import HTMLResponse 
 from http import HTTPStatus
+from sqlalchemy import create_engine,select
+from sqlalchemy.orm import Session
+from fast_zero.models import User
+from fast_zero.settings import Settings
 from fast_zero.schemas import Message, UserSchema,UserPublic,UserDB,UserList
 
 app = FastAPI()
@@ -13,11 +17,32 @@ def read_root():
 
 @app.post('/users/',response_model=UserPublic,status_code=HTTPStatus.CREATED) #ele pega a resposta da classe UserPublic em vez do USerSchema
 def create_user(user:UserSchema):
-    user_with_id = UserDB(id=len(database) + 1,**user.model_dump())
+    engine=create_engine(Settings().DATABASE_URL)
 
-    database.append(user_with_id)
-
-    return user_with_id
+    with Session(engine) as session:
+        db_user=session.scalar(
+            select(User).where(         #checa se tem um nome igual ou email igual
+                (User.username ==user.username)) | (User.email ==user.email)
+        )
+        if db_user is True:
+            if db_user.username == user.username:
+                raise HTTPException(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    detail='Username already exists'
+                )
+            if db_user.email == user.email:
+                raise HTTPException(
+                    status_code=HTTPStatus.BAD_REQUEST,
+                    detail='email already exists'
+                )
+            
+        db_user=User(
+            username=user.username, email=user.email, password=user.password
+            )
+        session.add(User)
+        session.commit()
+        session.refresh(db_user)
+    return db_user
 
 #response_class - trocar modelo de validaçao ex: vou trabalhar com JSON ou HTML
 #response_model - validaçao exata dos dados 

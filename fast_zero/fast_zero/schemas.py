@@ -1,21 +1,25 @@
-from pydantic import BaseModel , EmailStr
+from pydantic import BaseModel, EmailStr
 
-class Message(BaseModel):       #Utilizaçao de schemas   # Bom pra documentaçao
-       message:str   #falando que a response precisa ser str
+
+class Message(BaseModel):
+    message: str
+
 
 class UserSchema(BaseModel):
-        username:str
-        email:EmailStr
-        password:str 
+    username: str
+    email: EmailStr
+    password: str
 
-class UserDB(UserSchema):
-        id:int
-        
 
 class UserPublic(BaseModel):
-        id:int
-        username:str
-        email:EmailStr
+    id: int
+    username: str
+    email: EmailStr
+
+
+class UserDB(UserSchema):
+    id: int
+
 
 class UserList(BaseModel):
-        users:list[UserPublic]
+    users: list[UserPublic]
